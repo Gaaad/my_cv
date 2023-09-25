@@ -38,53 +38,61 @@ class AboutMe extends StatelessWidget {
           scrollController: scrollController,
         ),
         vSpace(height: 70),
-        Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Hello, I'm Abdalrhman Gad",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineLarge!
-                        .copyWith(color: MyColors.myYellow),
-                  ),
-                  Text(
-                    "Software Engineer | Flutter developer",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineLarge!
-                        .copyWith(color: MyColors.myYellow),
-                  ),
-                  vSpace(),
-                  Row(
-                    children: [
-                      const CustomVerticalLine(
-                        color: MyColors.myWhite,
-                        height: 100,
-                      ),
-                      hSpace(),
-                      const Flexible(
-                        child: Text(
-                          'Hardworking and motivated Flutter developer with 2 years experince, and a passion for creating innovative and user-friendly mobile apps. I am a strong leader and communicator. I am able to work effectively with others to achieve common goals. I am confident that I would be a valuable asset to your team.',
-                          maxLines: 5,
-                          textAlign: TextAlign.justify,
+        SizedBox(
+          height: MediaQuery.of(context).size.width > 835
+              ? MediaQuery.of(context).size.height * .8
+              : MediaQuery.of(context).size.width * 1.4,
+          child: Flex(
+            direction: MediaQuery.of(context).size.width > 835
+                ? Axis.horizontal
+                : Axis.vertical,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Hello, I'm Abdalrhman Gad",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge!
+                          .copyWith(color: MyColors.myYellow),
+                    ),
+                    Text(
+                      "Software Engineer | Flutter developer",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge!
+                          .copyWith(color: MyColors.myYellow),
+                    ),
+                    vSpace(),
+                    Row(
+                      children: [
+                        const CustomVerticalLine(
+                          color: MyColors.myWhite,
+                          height: 100,
                         ),
-                      )
-                    ],
-                  ),
-                ],
+                        hSpace(),
+                        const Flexible(
+                          child: Text(
+                            'Hardworking and motivated Flutter developer with 2 years experince, and a passion for creating innovative and user-friendly mobile apps. I am a strong leader and communicator. I am able to work effectively with others to achieve common goals. I am confident that I would be a valuable asset to your team.',
+                            maxLines: 5,
+                            textAlign: TextAlign.justify,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: Image.asset(
-                AssetManager.me,
+              Expanded(
+                child: Image.asset(
+                  AssetManager.me,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
