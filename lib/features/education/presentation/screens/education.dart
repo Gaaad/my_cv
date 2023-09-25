@@ -18,7 +18,7 @@ class Education extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.width > 835
           ? MediaQuery.of(context).size.height * .8
-          : MediaQuery.of(context).size.width * 1.4,
+          : MediaQuery.of(context).size.width * 1.67,
       child: Flex(
         key: myKey,
         direction: MediaQuery.of(context).size.width > 835
