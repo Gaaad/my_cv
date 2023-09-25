@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:my_cv/core/widgets/custom_vertical_line.dart';
 import 'package:my_cv/features/about_me/presentation/widgets/my_app_bar.dart';
 
