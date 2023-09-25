@@ -140,6 +140,13 @@ class MyAppBar extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
+        PopupMenuItem<SampleItem>(
+          value: SampleItem.contact,
+          child: Text(
+            'Contact',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+        ),
       ],
       child: const Icon(
         Icons.menu,
@@ -149,7 +156,7 @@ class MyAppBar extends StatelessWidget {
   }
 
   List<Widget> get button {
-    List<Widget> x = List.generate(
+    return List.generate(
       appBarButtons.length,
       (index) {
         return CustomTextButton(
@@ -163,6 +170,5 @@ class MyAppBar extends StatelessWidget {
         );
       },
     );
-    return x;
   }
 }

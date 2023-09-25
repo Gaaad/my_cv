@@ -19,4 +19,8 @@ class AssetManager {
   static String cozyCorner = '$basePath/cozy_corner.jpg';
   static String homeMart = '$basePath/home_mart.jpg';
   static String gadStorm = '$basePath/weather_app.jpg';
+
+  static String linkerIn = '$basePath/linkedin-logo.png';
+  static String linkerIn2 = '$basePath/linkedin.png';
+  static String github = '$basePath/github.png';
 }

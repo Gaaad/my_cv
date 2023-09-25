@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_cv/core/constants/asset_manager.dart';
 import 'package:my_cv/core/widgets/custom_spacer.dart';
 import 'package:my_cv/features/about_me/presentation/screens/about_me_screen.dart';
-
+import 'package:my_cv/features/contact/presentation/screens/contact.dart';
 import '../../../education/presentation/screens/education.dart';
 import '../../../projects/presentation/screens/projects_screen.dart';
 import '../../../skills/presentation/screens/skills.dart';
@@ -61,6 +61,8 @@ class MainScreen extends StatelessWidget {
                 Skills(myKey: _skillsKey, skills: skills, images: images),
                 vSpace(height: 120),
                 Projects(myKey: _projectsKey),
+                vSpace(height: 120),
+                Contact(myKey: _contactKey),
               ],
             ),
           ),

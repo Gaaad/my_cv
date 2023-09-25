@@ -20,7 +20,7 @@ class ProjectCard extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.width > 835
           ? MediaQuery.of(context).size.width * .3
-          : MediaQuery.of(context).size.width,
+          : MediaQuery.of(context).size.width * 1.3,
       width: double.infinity,
       decoration: BoxDecoration(
         color: MyColors.myYellow.withOpacity(.1),
