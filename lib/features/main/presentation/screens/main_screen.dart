@@ -18,23 +18,6 @@ class MainScreen extends StatelessWidget {
   final _projectsKey = GlobalKey();
   final _contactKey = GlobalKey();
 
-  List skills = [
-    'Flutter',
-    'Firebase',
-    'Dealing with Api',
-    'Bloc',
-    'My SQL',
-    'C#',
-  ];
-  List images = [
-    AssetManager.flutter,
-    AssetManager.firebase,
-    AssetManager.api,
-    AssetManager.block,
-    AssetManager.mySql,
-    AssetManager.cSharp,
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +41,7 @@ class MainScreen extends StatelessWidget {
                 vSpace(height: 120),
                 Education(myKey: _educationKey),
                 vSpace(height: 120),
-                Skills(myKey: _skillsKey, skills: skills, images: images),
+                Skills(myKey: _skillsKey),
                 vSpace(height: 120),
                 Projects(myKey: _projectsKey),
                 vSpace(height: 120),

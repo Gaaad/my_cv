@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_cv/core/constants/asset_manager.dart';
+import 'package:my_cv/features/projects/business_logic/projects_controller.dart';
+import 'package:my_cv/features/projects/data/api/project_services.dart';
+import 'package:my_cv/features/projects/data/models/project.dart';
+import 'package:my_cv/features/projects/data/repository/project_repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/colors.dart';
@@ -7,40 +12,22 @@ import '../../../../core/widgets/custom_spacer.dart';
 import '../../../../core/widgets/custom_vertical_line.dart';
 import '../widgets/project_card.dart';
 
+// ignore: must_be_immutable
 class Projects extends StatelessWidget {
   Projects({
     super.key,
     required this.myKey,
-  });
+  }) {
+    projectController =
+        Get.put(ProjectController(projectRepository: projectRepository));
+  }
 
   final GlobalKey myKey;
 
-  final List<Map> projects = [
-    {
-      'title': 'Cozy Corner',
-      'body':
-          "Cozy Corner is a software application that allows users to  offer or book different kinds of properties for rent or sale. The app allows users to list and advertise their available properties, browse for properties through various options, compare prices and locations, and make reservations.",
-      'image': AssetManager.cozyCorner,
-      'url':
-          'https://www.linkedin.com/posts/abdalrhman-gad-06514b253_flutter-flutterdevelopment-appdevelopment-activity-7087511003256516608-Ut9O?utm_source=share&utm_medium=member_desktop',
-    },
-    {
-      'title': 'Home Mart',
-      'body':
-          "Home Mart application is an E-commerce app that allows you to buy many kinds of products easily and at competitive prices, and orders will be delivered to your place inside Assiut - El Qusiya.",
-      'image': AssetManager.homeMart,
-      'url':
-          'https://play.google.com/store/apps/details?id=com.ctempurl.homeMart',
-    },
-    {
-      'title': 'Gad Storm',
-      'body':
-          "Developed a weather app that provides users with accurate and up-to-date weather information for their location and three more locations of their choice. Used an API to collect weather data. Implemented a user-friendly interface that allows users to easily find the information they need.",
-      'image': AssetManager.gadStorm,
-      'url':
-          'https://www.linkedin.com/posts/abdalrhman-gad-06514b253_flutter-mobileappdevelopment-activity-7061205803755610112-KiCP?utm_source=share&utm_medium=member_desktop',
-    },
-  ];
+  final ProjectRepository projectRepository =
+      ProjectRepository(projectServices: ProjectsServices());
+
+  late ProjectController projectController;
 
   @override
   Widget build(BuildContext context) {
@@ -77,22 +64,33 @@ class Projects extends StatelessWidget {
           ],
         ),
         vSpace(height: 30),
-        ...projects.map(
-          (e) => Column(
-            children: [
-              ProjectCard(
-                  title: e['title'],
-                  body: e['body'],
-                  image: e['image'],
-                  onTap: () async {
-                    if (!await launchUrl(Uri.parse(e['url']))) {
-                      throw Exception("Could not launch $e['url]");
-                    }
-                  }),
-              vSpace(),
-            ],
-          ),
-        ),
+        GetBuilder<ProjectController>(
+          builder: (projectController) {
+            List<Project> projects = projectController.getProjects();
+
+            return Column(
+              children: projects.map((e) {
+                return Column(
+                  children: [
+                    ProjectCard(
+                      title: e.name,
+                      body: e.description,
+                      image: e.imageUrl,
+                      onTap: () async {
+                        // if (!await launchUrl(Uri.parse(e.url))) {
+                        //   throw Exception("Could not launch ${e.url}");
+                        // }
+                      },
+                    ),
+                    const SizedBox(
+                        height:
+                            16), // You can replace this with your desired spacing widget
+                  ],
+                );
+              }).toList(),
+            );
+          },
+        )
       ],
     );
   }

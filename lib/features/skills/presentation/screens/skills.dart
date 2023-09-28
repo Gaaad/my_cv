@@ -2,24 +2,32 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_cv/features/skills/business_logic/grid_view_controller.dart';
+import 'package:my_cv/features/skills/business_logic/skills_controller.dart';
 import 'package:my_cv/features/skills/presentation/widgets/skill_card.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/custom_spacer.dart';
 import '../../../../core/widgets/custom_vertical_line.dart';
+import '../../data/api/skill_services.dart';
+import '../../data/models/skill.dart';
+import '../../data/repository/skill_repo.dart';
 
+// ignore: must_be_immutable
 class Skills extends StatelessWidget {
-  const Skills({
+  Skills({
     super.key,
-    required this.skills,
-    required this.images,
     required this.myKey,
-  });
-
-  final List skills;
-  final List images;
+  }) {
+    skillsController =
+        Get.put(SkillsController(skillRepository: skillRepository));
+  }
 
   final GlobalKey myKey;
+
+  final SkillRepository skillRepository =
+      SkillRepository(skillServices: SkillServices());
+
+  late SkillsController skillsController;
 
   @override
   Widget build(BuildContext context) {
@@ -58,37 +66,44 @@ class Skills extends StatelessWidget {
           ],
         ),
         vSpace(height: 30),
-        GetX<GridViewController>(
-            init: GridViewController(),
-            builder: (controller) {
-              controller.gridWidth.value = MediaQuery.of(context).size.width;
-              //(device width / card width) .Truncate()
-              int gridHorizontalCount = controller.gridWidth.value ~/ 220;
-              //(skills length / grid horizontal count) * (card height + paddings)
-              double gridVerticalHeight =
-                  (skills.length / gridHorizontalCount).ceil() * 320;
+        GetBuilder<SkillsController>(
+          builder: (_) {
+            List<Skill> skills = skillsController.getSkills();
 
-              return SizedBox(
-                height: gridVerticalHeight,
-                child: DynamicHeightGridView(
-                  itemCount: skills.length,
-                  crossAxisCount: gridHorizontalCount,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  builder: (ctx, index) {
-                    return Column(
-                      children: [
-                        if (index % 2 == 1) vSpace(),
-                        SkillCard(
-                          image: images[index % skills.length],
-                          title: skills[index % skills.length],
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              );
-            }),
+            return GetX<GridViewController>(
+              init: GridViewController(),
+              builder: (controller) {
+                controller.gridWidth.value = MediaQuery.of(context).size.width;
+                //(device width / card width) .Truncate()
+                int gridHorizontalCount = controller.gridWidth.value ~/ 220;
+                //(skills length / grid horizontal count) * (card height + paddings)
+                double gridVerticalHeight =
+                    (skills.length / gridHorizontalCount).ceil() * 320;
+
+                return SizedBox(
+                  height: gridVerticalHeight,
+                  child: DynamicHeightGridView(
+                    itemCount: skills.length,
+                    crossAxisCount: gridHorizontalCount,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    builder: (ctx, index) {
+                      return Column(
+                        children: [
+                          if (index % 2 == 1) vSpace(),
+                          SkillCard(
+                            image: skills[index].imageUrl,
+                            title: skills[index].name,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ],
     );
   }

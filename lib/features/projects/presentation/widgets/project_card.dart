@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
@@ -57,11 +58,12 @@ class ProjectCard extends StatelessWidget {
           Expanded(
             child: SizedBox(
               width: double.infinity,
+              height: double.infinity,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
+                child: FancyShimmerImage(
+                  imageUrl: image,
+                  boxFit: BoxFit.cover,
                 ),
               ),
             ),

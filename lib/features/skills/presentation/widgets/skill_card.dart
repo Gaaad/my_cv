@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/custom_spacer.dart';
@@ -25,11 +26,11 @@ class SkillCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            image,
+          FancyShimmerImage(
+            imageUrl: image,
             height: 150,
             width: 150,
-            fit: BoxFit.cover,
+            boxFit: BoxFit.cover,
           ),
           vSpace(),
           Text(title),
