@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_cv/core/constants/asset_manager.dart';
 import 'package:my_cv/features/projects/business_logic/projects_controller.dart';
 import 'package:my_cv/features/projects/data/api/project_services.dart';
 import 'package:my_cv/features/projects/data/models/project.dart';
 import 'package:my_cv/features/projects/data/repository/project_repo.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/custom_spacer.dart';
