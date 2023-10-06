@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_cv/features/projects/business_logic/projects_controller.dart';
 import 'package:my_cv/features/projects/data/api/project_services.dart';
-import 'package:my_cv/features/projects/data/models/project.dart';
 import 'package:my_cv/features/projects/data/repository/project_repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -63,29 +62,33 @@ class Projects extends StatelessWidget {
           ],
         ),
         vSpace(height: 30),
-        GetBuilder<ProjectController>(
+        GetX<ProjectController>(
           builder: (projectController) {
-            List<Project> projects = projectController.getProjects();
-
-            return Column(
-              children: projects.map((e) {
-                return Column(
-                  children: [
-                    ProjectCard(
-                      title: e.name,
-                      body: e.description,
-                      image: e.imageUrl,
-                      onTap: () async {
-                        if (!await launchUrl(Uri.parse(e.url))) {
-                          throw Exception("Could not launch ${e.url}");
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                );
-              }).toList(),
-            );
+            if (projectController.isLoading.value) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return Column(
+                children: projectController.projects.map((e) {
+                  return Column(
+                    children: [
+                      ProjectCard(
+                        title: e.name,
+                        body: e.description,
+                        image: e.imageUrl,
+                        onTap: () async {
+                          if (!await launchUrl(Uri.parse(e.url))) {
+                            throw Exception("Could not launch ${e.url}");
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  );
+                }).toList(),
+              );
+            }
           },
         )
       ],

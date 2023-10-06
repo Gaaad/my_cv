@@ -4,7 +4,7 @@ import 'package:my_cv/core/widgets/custom_spacer.dart';
 import 'package:my_cv/features/about_me/presentation/screens/about_me_screen.dart';
 import 'package:my_cv/features/contact/presentation/screens/contact.dart';
 import '../../../education/presentation/screens/education.dart';
-import '../../../projects/presentation/screens/projects_screen.dart';
+import '../../../projects/presentation/screens/projects.dart';
 import '../../../skills/presentation/screens/skills.dart';
 
 // ignore: must_be_immutable

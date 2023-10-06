@@ -9,7 +9,6 @@ import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/custom_spacer.dart';
 import '../../../../core/widgets/custom_vertical_line.dart';
 import '../../data/api/skill_services.dart';
-import '../../data/models/skill.dart';
 import '../../data/repository/skill_repo.dart';
 
 // ignore: must_be_immutable
@@ -66,42 +65,49 @@ class Skills extends StatelessWidget {
           ],
         ),
         vSpace(height: 30),
-        GetBuilder<SkillsController>(
+        GetX<SkillsController>(
           builder: (_) {
-            List<Skill> skills = skillsController.getSkills();
+            if (skillsController.isLoading.value) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return GetX<GridViewController>(
+                init: GridViewController(),
+                builder: (controller) {
+                  controller.gridWidth.value =
+                      MediaQuery.of(context).size.width;
+                  //(device width / card width) .Truncate()
+                  int gridHorizontalCount = controller.gridWidth.value ~/ 220;
+                  //(skills length / grid horizontal count) * (card height + paddings)
+                  double gridVerticalHeight =
+                      (skillsController.skills.length / gridHorizontalCount)
+                              .ceil() *
+                          320;
 
-            return GetX<GridViewController>(
-              init: GridViewController(),
-              builder: (controller) {
-                controller.gridWidth.value = MediaQuery.of(context).size.width;
-                //(device width / card width) .Truncate()
-                int gridHorizontalCount = controller.gridWidth.value ~/ 220;
-                //(skills length / grid horizontal count) * (card height + paddings)
-                double gridVerticalHeight =
-                    (skills.length / gridHorizontalCount).ceil() * 320;
-
-                return SizedBox(
-                  height: gridVerticalHeight,
-                  child: DynamicHeightGridView(
-                    itemCount: skills.length,
-                    crossAxisCount: gridHorizontalCount,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    builder: (ctx, index) {
-                      return Column(
-                        children: [
-                          if (index % 2 == 1) vSpace(),
-                          SkillCard(
-                            image: skills[index].imageUrl,
-                            title: skills[index].name,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                );
-              },
-            );
+                  return SizedBox(
+                    height: gridVerticalHeight,
+                    child: DynamicHeightGridView(
+                      itemCount: skillsController.skills.length,
+                      crossAxisCount: gridHorizontalCount,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      builder: (ctx, index) {
+                        return Column(
+                          children: [
+                            if (index % 2 == 1) vSpace(),
+                            SkillCard(
+                              image: skillsController.skills[index].imageUrl,
+                              title: skillsController.skills[index].name,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  );
+                },
+              );
+            }
           },
         ),
       ],
